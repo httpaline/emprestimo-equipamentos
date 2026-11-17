@@ -1,0 +1,15 @@
+meta {
+  name: Listar
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/equipamentos
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  baseUrl: http://localhost:8080
+}
