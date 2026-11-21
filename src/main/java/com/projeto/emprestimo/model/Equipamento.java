@@ -1,6 +1,8 @@
 package com.projeto.emprestimo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Equipamento {
@@ -9,15 +11,34 @@ public class Equipamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "O patrimônio é obrigatório.")
+    @Column(nullable = false,unique = true)
     private String patrimonio;
+
+    @NotBlank(message = "O nome é obrigatório. ")
+    @Column(nullable = false)
     private String nome;
 
+    @NotNull(message = "O tipo é obrigatório.")
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TipoEquipamento tipo;
 
+    @Column(nullable = false)
     private boolean disponivel;
 
     public Equipamento(){}
+
+    public void emprestar(){
+        if(!isDisponivel()){
+            throw new IllegalStateException("Equipamento indisponível.");
+        }
+        setDisponivel(false);
+    }
+
+    public void devolver(){
+        setDisponivel(true);
+    }
 
     public Long getId() {
         return id;

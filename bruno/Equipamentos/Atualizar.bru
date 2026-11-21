@@ -1,0 +1,18 @@
+meta {
+  name: Atualizar
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{baseUrl}}/equipamentos/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Notebook Dell Latitude",
+    "tipo": "NOTEBOOK"
+  }
+}
