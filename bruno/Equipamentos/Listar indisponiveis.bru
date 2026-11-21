@@ -1,0 +1,11 @@
+meta {
+  name: Listar indisponiveis
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/equipamentos?disponivel=false
+  body: none
+  auth: none
+}

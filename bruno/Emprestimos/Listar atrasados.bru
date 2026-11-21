@@ -1,0 +1,11 @@
+meta {
+  name: Listar atrasados
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/emprestimos?atrasados=true
+  body: none
+  auth: none
+}

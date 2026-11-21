@@ -34,10 +34,16 @@ public class EquipamentoController {
         return equipamentoService.cadastrar(equipamento);
     }
 
+    @PutMapping("/{id}")
+    public Equipamento atualizar(@PathVariable Long id, @RequestBody Equipamento dados){
+        return equipamentoService.atualizar(id, dados);
+    }
 
-    
-
-
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable Long id){
+        equipamentoService.remover(id);
+    }
 
 
 }
