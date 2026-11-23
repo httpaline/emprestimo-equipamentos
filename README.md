@@ -1,14 +1,17 @@
 # Sistema de Empréstimo de Equipamentos
 
+![CI](https://github.com/httpaline/emprestimo-equipamentos/actions/workflows/ci.yml/badge.svg)
+
 API REST para controlar o empréstimo de equipamentos (notebooks, monitores, headsets) a colaboradores: quem está com o quê e o que está atrasado.
 
-**API no ar (Render):** https://emprestimo-equipamentos-jdms.onrender.com
+- **API e front no ar (Render):** https://emprestimo-equipamentos-jdms.onrender.com
+- **Integração contínua (GitHub Actions):** https://github.com/httpaline/emprestimo-equipamentos/actions
 
 > No plano grátis o serviço dorme após 15 minutos parado: a primeira requisição pode levar cerca de 1 minuto. O banco H2 em memória perde os dados a cada reinício.
 
 ## Tecnologias
 
-Java, Spring Boot 4.1.2, Spring Data JPA, H2, JUnit 5, Docker.
+Java, Spring Boot 4.1.2, Spring Data JPA, H2, Bean Validation, JUnit 5, Docker, GitHub Actions. Front-end em HTML, CSS e JavaScript.
 
 ## Como rodar
 
@@ -20,13 +23,22 @@ cd emprestimo-equipamentos
 ./mvnw spring-boot:run
 ```
 
-A API sobe em `http://localhost:8080`. O console do H2 fica em `/h2-console` (apenas local).
+A API sobe em `http://localhost:8080`, e o front abre na raiz (`/`). O console do H2 fica em `/h2-console` (apenas local).
 
 Para rodar os testes:
 
 ```bash
 ./mvnw test
 ```
+
+## Front-end
+
+Interface servida pela própria aplicação na raiz (`/`), em HTML, CSS e JavaScript, sem framework. Os arquivos ficam em `src/main/resources/static/`.
+
+- **Visão geral:** indicadores de equipamentos, uso, atrasados e colaboradores, e os últimos empréstimos.
+- **Equipamentos, Empréstimos e Colaboradores:** listagens com busca, filtro de status e paginação.
+- **Cadastros em modal:** o patrimônio do equipamento é gerado automaticamente a partir do tipo.
+- **Responsivo:** no celular a sidebar vira um menu sanduíche.
 
 ## Rotas
 
@@ -73,12 +85,21 @@ Para rodar os testes:
 
 ## Testes
 
-Testes unitários com JUnit 5 em `src/test/java` (`EquipamentoTest` e `EmprestimoTest`), cobrindo as regras das entidades.
+Testes unitários com JUnit 5 em `src/test/java` (`EquipamentoTest` e `EmprestimoTest`), cobrindo as regras das entidades. Eles rodam automaticamente a cada push e Pull Request pelo GitHub Actions (`.github/workflows/ci.yml`).
 
 ## Bônus feitos
 
-- Swagger: documentação e tela de testes em `/swagger-ui/index.html`
+- **Swagger:** documentação e tela de testes em `/swagger-ui/index.html`
   (https://emprestimo-equipamentos-jdms.onrender.com/swagger-ui/index.html)
+- **Relacionamento com `@ManyToOne`:** o empréstimo referencia o equipamento e o colaborador
+- **Validação:** campos obrigatórios e formato de e-mail recusados antes de chegar ao service
+- **GitHub Actions:** testes rodando a cada push e Pull Request
+
+<!-- Descomente só o que você confirmar nos comandos de conferência:
+- **Actuator:** `/actuator/health`
+- **Tratamento de erros:** respostas 404, 409 e 400 com mensagem
+- **Testes de integração com MockMvc**
+-->
 
 ## Deploy
 
